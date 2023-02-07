@@ -66,6 +66,8 @@ PortPin L[4] =
 
 uint16_t ButtonMatrix = 0;
 int state = 0;
+int Push_B = 0;
+uint16_t ButtonMatrix_I = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -120,10 +122,22 @@ int main(void)
   {
     /* USER CODE END WHILE */
 //		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, 1);
+
+    /* USER CODE BEGIN 3 */
 		static uint32_t timestamp = 0;
 		if (HAL_GetTick() >= timestamp) {
 			timestamp = HAL_GetTick() + 10;
 			ReadMatrixButton_1Row();
+			//Check rising edge
+			if (ButtonMatrix > ButtonMatrix_I)
+			{
+				Push_B = 1;
+			}
+			else
+			{
+				Push_B = 0;
+			}
+			ButtonMatrix_I = ButtonMatrix;
 			//Student number : 64340500027
 			switch (state) {
 			case 0: //state init
@@ -224,7 +238,7 @@ int main(void)
 				if (ButtonMatrix == 0 || ButtonMatrix == 32) {
 					state = 6;
 				}
-				if (ButtonMatrix == 8) {
+				if (ButtonMatrix == 8 && Push_B == 1) {
 					state = 7;
 				}
 				if (ButtonMatrix != 8 && ButtonMatrix != 0
@@ -240,7 +254,7 @@ int main(void)
 				if (ButtonMatrix == 0) {
 					state = 7;
 				}
-				if (ButtonMatrix == 8) {
+				if (ButtonMatrix == 8 && Push_B == 1) {
 					state = 8;
 				}
 				if (ButtonMatrix != 8 && ButtonMatrix != 0) {
@@ -255,7 +269,7 @@ int main(void)
 				if (ButtonMatrix == 0) {
 					state = 8;
 				}
-				if (ButtonMatrix == 8) {
+				if (ButtonMatrix == 8 && Push_B == 1) {
 					state = 9;
 				}
 				if (ButtonMatrix != 8 && ButtonMatrix != 0) {
@@ -332,7 +346,6 @@ int main(void)
 				break;
 			}
 		}
-    /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
 }
