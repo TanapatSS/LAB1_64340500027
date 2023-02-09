@@ -68,6 +68,7 @@ uint16_t ButtonMatrix = 0;
 int state = 0;
 int Push_B = 0;
 uint16_t ButtonMatrix_I = 0;
+int n = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -141,207 +142,236 @@ int main(void)
 			//Student number : 64340500027
 			switch (state) {
 			case 0: //state init
-				if (ButtonMatrix == 0 || ButtonMatrix == 4096) {
+				if (ButtonMatrix == 0) {
 					state = 0;
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, 0);
 				}
-				if (ButtonMatrix == 512) {
+				if (ButtonMatrix == 512 && Push_B == 1) {
 					state = 1;
+					n += 1;
 				}
-				if (ButtonMatrix != 512 && ButtonMatrix != 0
-						&& ButtonMatrix != 4096) {
+				if (ButtonMatrix != 512 && Push_B == 1) {
 					state = 13;
+				}
+				if (ButtonMatrix == 8192 && Push_B == 1) {
+					state = 0;
 				}
 				break;
 
 			case 1: //6
-				if (ButtonMatrix == 0 || ButtonMatrix == 512) {
-					state = 1;
-				}
-				if (ButtonMatrix == 2) {
+				if (ButtonMatrix == 2 && Push_B == 1) {
 					state = 2;
+					n += 1;
 				}
-				if (ButtonMatrix != 2 && ButtonMatrix != 0
-						&& ButtonMatrix != 512) {
+				if (ButtonMatrix != 2 && Push_B == 1) {
 					state = 13;
 				}
-				if (ButtonMatrix == 4096) {
+				if (ButtonMatrix == 4096 && Push_B == 1) {
 					state = 0;
+					n = 0;
+				}
+				if (ButtonMatrix == 8192 && Push_B == 1) {
+					state = 0;
+					n = n-1;
 				}
 				break;
 
 			case 2: //64
-				if (ButtonMatrix == 0 || ButtonMatrix == 2) {
-					state = 2;
-				}
-				if (ButtonMatrix == 1024) {
+				if (ButtonMatrix == 1024 && Push_B == 1) {
 					state = 3;
+					n += 1;
 				}
-				if (ButtonMatrix != 1024 && ButtonMatrix != 0
-						&& ButtonMatrix != 2) {
+				if (ButtonMatrix != 1024 && Push_B == 1) {
 					state = 13;
 				}
-				if (ButtonMatrix == 4096) {
+				if (ButtonMatrix == 4096 && Push_B == 1) {
 					state = 0;
+					n = 0;
+				}
+				if (ButtonMatrix == 8192 && Push_B == 1) {
+					state = 1;
+					n = n-1;
 				}
 				break;
 
 			case 3: //643
-				if (ButtonMatrix == 0 || ButtonMatrix == 1024) {
-					state = 3;
-				}
-				if (ButtonMatrix == 2) {
+				if (ButtonMatrix == 2 && Push_B == 1) {
 					state = 4;
+					n += 1;
 				}
-				if (ButtonMatrix != 2 && ButtonMatrix != 0
-						&& ButtonMatrix != 1024) {
+				if (ButtonMatrix != 2 && Push_B == 1) {
 					state = 13;
 				}
-				if (ButtonMatrix == 4096) {
+				if (ButtonMatrix == 4096 && Push_B == 1) {
 					state = 0;
+					n = 0;
+				}
+				if (ButtonMatrix == 8192 && Push_B == 1) {
+					state = 2;
+					n = n-1;
 				}
 				break;
 
 			case 4: //6434
-				if (ButtonMatrix == 0 || ButtonMatrix == 2) {
-					state = 4;
-				}
-				if (ButtonMatrix == 8) {
+				if (ButtonMatrix == 8 && Push_B == 1) {
 					state = 5;
+					n += 1;
 				}
-				if (ButtonMatrix != 8 && ButtonMatrix != 0
-						&& ButtonMatrix != 2) {
+				if (ButtonMatrix != 8 && Push_B == 12) {
 					state = 13;
 				}
-				if (ButtonMatrix == 4096) {
+				if (ButtonMatrix == 4096 && Push_B == 1) {
 					state = 0;
+					n = 0;
+				}
+				if (ButtonMatrix == 8192 && Push_B == 1) {
+					state = 3;
+					n = n-1;
 				}
 				break;
 
 			case 5: //64340
-				if (ButtonMatrix == 0 || ButtonMatrix == 8) {
-					state = 5;
-				}
-				if (ButtonMatrix == 32) {
+				if (ButtonMatrix == 32 && Push_B == 1) {
 					state = 6;
+					n += 1;
 				}
-				if (ButtonMatrix != 32 && ButtonMatrix != 0
-						&& ButtonMatrix != 8) {
+				if (ButtonMatrix != 32 && Push_B == 1) {
 					state = 13;
 				}
-				if (ButtonMatrix == 4096) {
+				if (ButtonMatrix == 4096 && Push_B == 1) {
 					state = 0;
+					n = 0;
+				}
+				if (ButtonMatrix == 8192 && Push_B == 1) {
+					state = 4;
+					n = n-1;
 				}
 				break;
 
 			case 6: //643405
-				if (ButtonMatrix == 0 || ButtonMatrix == 32) {
-					state = 6;
-				}
 				if (ButtonMatrix == 8 && Push_B == 1) {
 					state = 7;
+					n += 1;
 				}
-				if (ButtonMatrix != 8 && ButtonMatrix != 0
-						&& ButtonMatrix != 32) {
+				if (ButtonMatrix != 8 && Push_B == 1) {
 					state = 13;
 				}
-				if (ButtonMatrix == 4096) {
+				if (ButtonMatrix == 4096 && Push_B == 1) {
 					state = 0;
+					n = 0;
+				}
+				if (ButtonMatrix == 8192 && Push_B == 1) {
+					state = 5;
+					n = n-1;
 				}
 				break;
 
 			case 7: //6434050
-				if (ButtonMatrix == 0) {
-					state = 7;
-				}
 				if (ButtonMatrix == 8 && Push_B == 1) {
 					state = 8;
+					n += 1;
 				}
-				if (ButtonMatrix != 8 && ButtonMatrix != 0) {
+				if (ButtonMatrix != 8 && Push_B == 1) {
 					state = 13;
 				}
-				if (ButtonMatrix == 4096) {
+				if (ButtonMatrix == 4096 && Push_B == 1) {
 					state = 0;
+					n = 0;
+				}
+				if (ButtonMatrix == 8192 && Push_B == 1) {
+					state = 6;
+					n = n-1;
 				}
 				break;
 
 			case 8: //64340500
-				if (ButtonMatrix == 0) {
-					state = 8;
-				}
 				if (ButtonMatrix == 8 && Push_B == 1) {
 					state = 9;
+					n += 1;
 				}
-				if (ButtonMatrix != 8 && ButtonMatrix != 0) {
+				if (ButtonMatrix != 8 && Push_B == 1) {
 					state = 13;
 				}
-				if (ButtonMatrix == 4096) {
+				if (ButtonMatrix == 4096 && Push_B == 1) {
 					state = 0;
+					n = 0;
+				}
+				if (ButtonMatrix == 8192 && Push_B == 1) {
+					state = 7;
+					n = n-1;
 				}
 				break;
 
 			case 9: //643405000
-				if (ButtonMatrix == 0 || ButtonMatrix == 8) {
-					state = 9;
-				}
-				if (ButtonMatrix == 64) {
+				if (ButtonMatrix == 64 && Push_B == 1) {
 					state = 10;
+					n += 1;
 				}
-				if (ButtonMatrix != 64 && ButtonMatrix != 0
-						&& ButtonMatrix != 8) {
+				if (ButtonMatrix != 64 && Push_B == 1) {
 					state = 13;
 				}
-				if (ButtonMatrix == 4096) {
+				if (ButtonMatrix == 4096 && Push_B == 1) {
 					state = 0;
+					n = 0;
+				}
+				if (ButtonMatrix == 8192 && Push_B == 1) {
+					state = 8;
+					n = n-1;
 				}
 				break;
 
 			case 10: //6434050002
-				if (ButtonMatrix == 0 || ButtonMatrix == 64) {
-					state = 10;
-				}
-				if (ButtonMatrix == 1) {
+				if (ButtonMatrix == 1 && Push_B == 1) {
 					state = 11;
+					n += 1;
 				}
-				if (ButtonMatrix != 1 && ButtonMatrix != 0
-						&& ButtonMatrix != 64) {
+				if (ButtonMatrix != 1 && Push_B == 1) {
 					state = 13;
 				}
-				if (ButtonMatrix == 4096) {
+				if (ButtonMatrix == 4096 && Push_B == 1) {
 					state = 0;
+					n = 0;
+				}
+				if (ButtonMatrix == 8192 && Push_B == 1) {
+					state = 9;
+					n = n-1;
 				}
 				break;
 
 			case 11: //64340500027
-				if (ButtonMatrix == 0 || ButtonMatrix == 1) {
-					state = 11;
-				}
-				if (ButtonMatrix == 32768) {
-
+				if (ButtonMatrix == 32768 && Push_B == 1) {
 					state = 12;
+					n += 1;
 				}
-				if (ButtonMatrix != 32768 && ButtonMatrix != 0
-						&& ButtonMatrix != 1) {
+				if (ButtonMatrix != 32768 && Push_B == 1) {
 					state = 13;
 				}
-				if (ButtonMatrix == 4096) {
+				if (ButtonMatrix == 4096 && Push_B == 1) {
 					state = 0;
+					n = 0;
+				}
+				if (ButtonMatrix == 8192 && Push_B == 1) {
+					state = 10;
+					n = n-1;
 				}
 				break;
 
 			case 12: //OK -> LED_ON
-				if (ButtonMatrix == 0 || ButtonMatrix == 32768) {
+				if (ButtonMatrix == 0) {
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, 1);
 					state = 12;
 				}
-				if (ButtonMatrix == 4096) {
+				if (ButtonMatrix == 4096 && Push_B == 1) {
 					state = 0;
 				}
 				break;
 
 			case 13: //blank state
-				if (ButtonMatrix == 4096) {
+				if (ButtonMatrix == 4096 && Push_B == 1) {
 					state = 0;
+				}
+				if (ButtonMatrix == 8192 && Push_B == 1) {
+					state = n;
 				}
 				break;
 			}
